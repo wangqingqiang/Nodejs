@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>多人在线聊天室</title>
+    <style>
+        body {
+            color: #F00;;
+        }
+    </style>
+</head>
+<body>
+这是一个测试程序
+<button id="btn">按钮</button>
+</body>
+<script>
+    var btn=document.getElementById('btn');
+    btn.onclick= function () {
+        socket.send('我来自客户端');
+    }
+    var ws = new WebSocket('ws://localhost:8080','ws');
+    console.log(ws);
+    ws.onopen = function (event) {
+        console.log(event);
+    }
+    ws.onmessage = function(e) {
+        console.log(e.data);
+    };
+    ws.onclose = function() {
+        console.log("onclose");
+    };
+    ws.onerror = function(e) {
+        console.log(e);
+    };
+</script>
+</html>
