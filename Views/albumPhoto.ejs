@@ -63,12 +63,12 @@
 <!--图片轮播-->
 <div class="container center">
     这是相册主页
-    <br> <br>
+    <br>
     <div class="row">
-        <% albums.forEach(function(item, index, items){ %>
+        <% photos.forEach(function(item, index, items){ %>
         <div class="col-xs-6 col-md-3">
-            <a href="/<%= item%>" class="thumbnail">
-                <img src="static/images/ico.jpg" alt="<%= item%>">
+            <a href="###" class="thumbnail">
+                <img src="Upload/Album/<%= album%>/<%= item%>" alt="<%= item%>">
             </a>
             <%= item%>
 
