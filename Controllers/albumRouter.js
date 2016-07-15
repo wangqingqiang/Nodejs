@@ -36,7 +36,7 @@ function showAlbum(req, res) {
     })
 }
 function showPhoto(req,res){
-    var pathname='/upload/album/'+req.params.albumName+'/'+req.params.id;
+    var pathname='/Upload/Album/'+req.params.albumName+'/'+req.params.id;
     //console.log(pathname);
     //albumModel.getPhoto(pathname,function(error,data){
     //    if(error){
