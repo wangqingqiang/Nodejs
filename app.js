@@ -5,6 +5,7 @@ var express=require('express');
 var albumRouter=require('./Controllers/albumRouter.js');
 var app=express();
 
+app.set('views','./Views');
 app.set('view engine','ejs');
 //设置静态服务路由
 //注意此处是 /static路由 ，但是目录是 ./Public，一个带 '.'，一个不带
@@ -19,4 +20,5 @@ app.get('/favicon.ico',function(req,res){});
 app.get('/:album',albumRouter.showAlbum)
 app.get('/upload/album/:albumName/:id',albumRouter.showPhoto);
 app.use(albumRouter.show404);
+
 app.listen(process.env.PORT || 5050)
