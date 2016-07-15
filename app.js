@@ -19,5 +19,4 @@ app.get('/favicon.ico',function(req,res){});
 app.get('/:album',albumRouter.showAlbum)
 app.get('/upload/album/:albumName/:id',albumRouter.showPhoto);
 app.use(albumRouter.show404);
-app.listen(8080,'192.168.92.204',(err)=>{
-})
+app.listen(process.env.PORT || 5050)
