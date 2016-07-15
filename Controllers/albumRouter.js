@@ -29,6 +29,7 @@ function showAlbum(req, res) {
     albumModel.getPhotos(album, function (error, photos) {
         if (error) {
             console.log(error);
+            res.render('404');
         }
         else {
             res.render('albumPhoto', {album: album, photos: photos});
