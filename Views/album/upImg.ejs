@@ -14,7 +14,7 @@
             padding-top: 50px;
         }
 
-        .center {
+        .album {
             text-align: center;
             margin-top: 30px;
         }
@@ -60,20 +60,24 @@
     </div>
 </nav>
 
-<!--图片轮播-->
-<div class="container center">
-    这是相册主页
-    <br> <br>
+<div class="container">
     <div class="row">
-        <% albums.forEach(function(item, index, items){ %>
-        <div class="col-xs-6 col-md-3">
-            <a href="/<%= item%>" class="thumbnail">
-                <img src="static/images/ico.jpg" alt="<%= item%>">
-            </a>
-            <%= item%>
-
-        </div>
-        <% }) %>
+        <form style="width:40%;" method="post" action="#" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="exampleInputEmail1">选择相册</label>
+                <select class="form-control" name="album">
+                    <% for(var i = 0 ; i < albums.length ; i++){%>
+                    <option><%= albums[i] %></option>
+                    <%}%>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">选择图片</label>
+                <p>尺寸小于2M</p>
+                <input type="file" id="exampleInputFile"  name="img">
+            </div>
+            <button type="submit" class="btn btn-default">上传</button>
+        </form>
     </div>
 </div>
 

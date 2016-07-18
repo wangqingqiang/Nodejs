@@ -3,33 +3,9 @@
  */
 var fs = require('fs');
 var path=require('path');
+var formidable=require('formidable');
 
-function getAlbums(callback) {
-    var albumsPath = './Upload/Album';
-    var albums = [];
-    fs.readdir(albumsPath, function (error, files) {
-        if (error) {
-            callback(error, null);
-        } else {
-            files.forEach(function (file, index, files) {
-                fs.stat(`${albumsPath}/${file}`, (error, stats)=> {
-                    if (error) {
-                        console.log(error);
-                        callback(error, null);
-                    } else {
-                        if (stats.isDirectory()) {
-                            albums.push(file);
-                        }
-                    }
-                    if (index === files.length - 1) {
-                        callback(null, albums);
-                    }
-                })
-
-            });
-        }
-    })
-}
+//同步方式获取相册列表
 function getAlbumsSync() {
     var albumsPath = './Upload/Album';
     var albums = [];
@@ -53,6 +29,8 @@ function getAlbumsSync() {
     }
     return albums;
 }
+
+//获取某一相册下的图片列表，支持格式：['.jpg','.png','.jpeg','.gif','.bmp','.ico']
 function getPhotos(album,callback){
     var albumPath = `./Upload/Album/${album}`;
     var photos=[];
@@ -86,6 +64,8 @@ function getPhotos(album,callback){
         }
     })
 }
+
+//获取某个图片请求，发现有sendFile弃用此方法
 function getPhoto(pathname,callback){
     var file=fs.readFile(pathname,(error,data)=>{
         if(error) {
@@ -95,9 +75,48 @@ function getPhoto(pathname,callback){
         }
     })
 }
+
+function uploadImg(req,callback) {
+    var form = new formidable.IncomingForm();
+    form.uploadDir = "./Upload/.temp";
+    form.keepExtensions = true;
+    form.maxFieldsSize = 2 * 1024 * 1024;
+
+    fs.stat(form.uploadDir, (error, stats)=> {
+        if (error) {
+            fs.mkdir(form.uploadDir, (error)=> {
+                if (error) {
+                    console.log('创建.temp文件夹失败');
+                    console.log(error);
+                    callback(error, null);
+                }
+                else {
+                    form.parse(req, function (err, fields, files) {
+                        if(err){
+                            console.log(err);
+                            console.log('parse错误1');
+                        }
+                        var album = fields.album;
+                        var img = files.img;
+                        callback(null, album);
+                    });
+                }
+            })
+        }
+        else {
+            form.parse(req, function (err, fields, files) {
+                console.log(err);
+                console.log('parse错误2');
+                var album = fields.album;
+                var img = files.img;
+                callback(null, album);
+            });
+        }
+    })
+}
 module.exports = {
-    getAlbums,
     getAlbumsSync,
     getPhotos,
-    getPhoto
+    getPhoto,
+    uploadImg
 }

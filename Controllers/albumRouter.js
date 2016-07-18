@@ -3,7 +3,7 @@
  */
 var albumModel = require('../Models/albumModel.js');
 
-function showIndex(req, res) {
+function showAlbumList(req, res) {
     //res.render('albumIndex');
     //albumModel.getAlbums(function(error,albums){
     //    if(error){
@@ -18,25 +18,26 @@ function showIndex(req, res) {
     //})
     var albums = albumModel.getAlbumsSync();
     if (albums.length) {
-        res.render('albumIndex', {albums: albums});
+        res.render('./album/albumIndex', {albums: albums});
     } else {
         res.status(404);
         res.render('404');
     }
 }
-function showAlbum(req, res) {
-    var album = req.params.album;
+function showAlbumPhoto(req, res,next) {
+    var album = req.params.albumName;
     albumModel.getPhotos(album, function (error, photos) {
         if (error) {
             console.log(error);
-            res.render('404');
+            console.log(`没有${album}相册，执行下一个路由`);
+            next();
         }
         else {
-            res.render('albumPhoto', {album: album, photos: photos});
+            res.render('./album/albumPhoto', {album: album, photos: photos});
         }
     })
 }
-function showPhoto(req,res){
+function getPhoto(req,res){
     var pathname='/Upload/Album/'+req.params.albumName+'/'+req.params.id;
     //console.log(pathname);
     //albumModel.getPhoto(pathname,function(error,data){
@@ -71,10 +72,26 @@ function show404(req, res) {
     res.status(404);
     res.render('404')
 }
+function showUploadPage(req,res){
+    var albums=albumModel.getAlbumsSync();
+res.render('./album/upImg',{albums:albums});
+}
+function uploadImg(req,res){
+
+    albumModel.uploadImg(req,function(error,album){
+        if(error){
+            res.render('404');
+        }else {
+            res.redirect(`/${album}`);
+        }
+    })
+}
 
 module.exports = {
-    showIndex,
+    showAlbumList,
     show404,
-    showAlbum,
-    showPhoto
+    showAlbumPhoto,
+    getPhoto,
+    showUploadPage,
+    uploadImg
 }
