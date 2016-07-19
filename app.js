@@ -16,13 +16,14 @@ app.use('/static',express.static('./Public'));
 // 例如app.use(/admin,callback)可以匹配到 /admin/adminlist/adminid等
 app.get('/',albumRouter.showAlbumList);
 //设置相册详情页路由
-app.get('/favicon.ico',function(req,res){});
+app.get('/favicon.ico',function(req,res){res.end();});
 app.get('/albums',albumRouter.showAlbumList);
 app.get('/uploadAlbum',albumRouter.showUploadPage);
 app.post('/uploadAlbum',albumRouter.uploadImg);
 
 app.get('/:albumName',albumRouter.showAlbumPhoto)
 app.get('/upload/album/:albumName/:id',albumRouter.getPhoto);
+app.get('/500error',albumRouter.show500)
 app.use(albumRouter.show404);
 
 app.listen(process.env.PORT || 5050)

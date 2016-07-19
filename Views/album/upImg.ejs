@@ -18,9 +18,10 @@
             text-align: center;
             margin-top: 30px;
         }
-        .thumbnail{
-            width:125px;
-            margin:0 auto;
+
+        .thumbnail {
+            width: 125px;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -61,27 +62,58 @@
 </nav>
 
 <div class="container">
-    <div class="row">
-        <form style="width:40%;" method="post" action="#" enctype="multipart/form-data">
+    <ol class="breadcrumb">
+        <li><a href="/albums">全部相册</a></li>
+        &nbsp;&nbsp;| &nbsp;&nbsp;<a href="/uploadAlbum">上传图片</a>
+    </ol>
+    <div class="row col-md-3 col-md-offset-1">
+        <form id="uploadForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleInputEmail1">选择相册</label>
-                <select class="form-control" name="album">
-                    <% for(var i = 0 ; i < albums.length ; i++){%>
+                <select class="form-control" name="album" id="album">
+                    <% for(var i = 0 ; i < albums.length ; i++){ %>
                     <option><%= albums[i] %></option>
-                    <%}%>
+                    <% } %>
                 </select>
             </div>
             <div class="form-group">
-                <label for="exampleInputFile">选择图片</label>
-                <p>尺寸小于2M</p>
-                <input type="file" id="exampleInputFile"  name="img">
+                <label for="img">选择图片<small>(尺寸小于2MB)</small></label>
+                <input type="file" id="img" name="img">
             </div>
-            <button type="submit" class="btn btn-default">上传</button>
+            <button type="button" class="btn btn-default" id="submit">上传</button>
         </form>
     </div>
 </div>
 
 <script src="/static/scripts/jquery-1.9.1.min.js"></script>
 <script src="/static/scripts/bootstrap.min.js"></script>
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            var files=$("#img")[0].files;
+            if(!files||files.length<=0){
+                alert("请先选择图片！")
+                return;
+            }
+            var formData = new FormData($("#uploadForm")[0]);
+            $.ajax({
+                        url: '/uploadAlbum',
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (data) {
+                            if (data.result == 'success' || data.result == 'fail') {
+                                alert(data.msg);
+                            }
+                            else {
+                                alert('未知错误，请刷新页面重试！')
+                            }
+                        }
+                    }
+            );
+        });
+    });
+</script>
 </body>
 </html>

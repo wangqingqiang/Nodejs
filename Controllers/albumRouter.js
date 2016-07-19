@@ -68,10 +68,6 @@ function getPhoto(req,res){
     });
 
 }
-function show404(req, res) {
-    res.status(404);
-    res.render('404')
-}
 function showUploadPage(req,res){
     var albums=albumModel.getAlbumsSync();
 res.render('./album/upImg',{albums:albums});
@@ -80,16 +76,32 @@ function uploadImg(req,res){
 
     albumModel.uploadImg(req,function(error,album){
         if(error){
-            res.render('404');
+            console.log(error);
+            if(error.__type===0){
+                //res.render('500');
+                res.redirect('/500error')
+            }
+            else{
+                res.json({result:'fail',msg:'图片尺寸超过限制！'})
+            }
         }else {
-            res.redirect(`/${album}`);
+           // res.redirect(`/${album}`);
+            res.json({result:'success',msg:'图片上传成功，请去相应的相册查看！'})
         }
     })
 }
-
+function show500(req, res) {
+    res.status(500);
+    res.render('500')
+}
+function show404(req, res) {
+    res.status(404);
+    res.render('404')
+}
 module.exports = {
     showAlbumList,
     show404,
+    show500,
     showAlbumPhoto,
     getPhoto,
     showUploadPage,
