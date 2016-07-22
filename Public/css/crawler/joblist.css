@@ -1,0 +1,33 @@
+*{
+    margin:0;
+    padding:0;
+    font-size: 16px;
+    line-height: 16px;
+}
+input[type=text]{
+    box-sizing:content-box;
+    display: inline-block;
+    margin-right: 30px;
+    padding: 13px 15px;
+    width: 724px;
+    height: 18px;
+    line-height: 18px;
+    /*border-color: hsl(0, 100%, 100%);*/
+    border-radius:2px;
+}
+input[type=text]::selection{
+    border-color:red;
+}
+.search-bar{
+    height: 200px;
+    padding-top:20px;
+    padding-left:20px;
+    background-color: hsl(168, 14%, 93%);
+}
+#submit{
+    padding: 15px 55px;
+    background-color: hsl(166, 100%, 35%);
+    color: hsl(0, 100%, 100%);
+    border-radius: 3px;
+    border: 2px solid hsla(0, 0%, 0%, 0);
+}
