@@ -19,6 +19,8 @@ app.get('/',albumRouter.showAlbumList);
 app.get('/favicon.ico',function(req,res){res.end();});
 
 app.get('/crawler',crawlerRouter.showCrawlerPage)
+app.post('/getJobs',crawlerRouter.getJobList)
+
 //设置相册详情页路由
 app.get('/albums',albumRouter.showAlbumList); //相册列表页
 app.get('/uploadAlbum',albumRouter.showUploadPage); //上传图片页

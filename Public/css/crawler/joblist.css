@@ -1,15 +1,17 @@
 *{
     margin:0;
     padding:0;
+}
+.main{
+    font-family: "Hiragino Sans GB","Microsoft Yahei",SimSun,Arial,"Helvetica Neue",Helvetica;
     font-size: 16px;
-    line-height: 16px;
 }
 input[type=text]{
     box-sizing:content-box;
     display: inline-block;
     margin-right: 30px;
     padding: 13px 15px;
-    width: 724px;
+    width: 600px;
     height: 18px;
     line-height: 18px;
     /*border-color: hsl(0, 100%, 100%);*/
@@ -19,15 +21,71 @@ input[type=text]::selection{
     border-color:red;
 }
 .search-bar{
-    height: 200px;
-    padding-top:20px;
-    padding-left:20px;
+    padding:20px 20px;
     background-color: hsl(168, 14%, 93%);
+    font-size:12px;
 }
 #submit{
-    padding: 15px 55px;
+    padding: 12px 50px;
     background-color: hsl(166, 100%, 35%);
     color: hsl(0, 100%, 100%);
     border-radius: 3px;
     border: 2px solid hsla(0, 0%, 0%, 0);
+}
+form{
+    margin-top:10px;
+}
+.joblist li{
+    list-style: none;
+    border:1px solid #e8e8e8;
+    margin-top:20px;
+}
+.joblist .top .t{
+    color:#00b38a;
+}
+.clearfix:after{
+    content: '.';
+    display: block;
+    height:0;
+    visibility: hidden;
+    clear: both;
+}
+.joblist .h,.joblist .position{
+    float: left;;
+    line-height:100%;
+}
+
+span{
+    margin:5px;
+    font-size:14px;
+}
+.joblist .logo,.joblist .company{
+    margin:0 20px;
+    float: right;
+}
+.joblist .company{
+    margin-right:15px;
+}
+.joblist .logo img{
+    border:1px solid #dcdcdc;
+    width:60px;
+    height:60px;
+}
+.joblist .bottom{
+    background-color: #fafafa;
+    height:40px;
+    line-height:40px;
+}
+.joblist .left{
+    float: left;
+}
+.joblist .right{
+    float: right;
+    margin-right:55px;
+}
+.joblist .bottom .right span{
+    border:1px solid #dcdcdc;
+    margin-right:10px;
+    padding:0 5px;
+    font-size:12px;
 }

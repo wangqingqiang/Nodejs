@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="app">
 <head>
     <meta charset="UTF-8">
     <title>我要跳槽啦</title>
@@ -15,7 +15,7 @@
     </style>
     <link rel="stylesheet" href="static/css/crawler/joblist.css">
 </head>
-<body>
+<body ng-controller="crawlerController">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
@@ -50,124 +50,88 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="main col-md-10 col-sm-10 col-lg-9 col-md-offset-1 col-lg-offset-1">
     <div class="search-wrapper">
         <div id="searchBar" class="search-bar">
             <div class="input-wrapper">
-                <input type="text" id="keyword" autocomplete="off" maxlength="64" placeholder="搜索职位、公司或地点" value=""
-                       class="ui-autocomplete-input">
-
-                <input type="button" id="submit" value="搜索">
+                <input type="text" id="keyword"  maxlength="16" placeholder="搜索职位、公司或地点" value=""
+                        ng-keyup="keyup()">
+                <input type="button" id="submit" value="搜索" ng-click="getJobs(1)">
             </div>
-        </div>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="city" class="col-sm-2 control-label">城市：</label>
-                <div class="col-sm-2">
-                    <select class="form-control" name="city" id="city">
-                        <% for(var i = 0 ; i < citys.length ; i++){ %>
-                        <option><%= citys[i] %></option>
-                        <% } %>
-                    </select>
-                </div>
-
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- 左侧 -->
-<div class="s_position_list " id="s_position_list">
-    <ul class="item_con_list" style="display: block;">
-        <li class="con_list_item first_row" data-index="0" data-positionid="2136127" data-salary="5k-8k"
-            data-company="胜券在握" data-positionname="新媒体销售（提供媒体客户资源）" data-companyid="81108"
-            data-hrid="2188933">
-            <div class="list_item_top">
-                <div class="position">
-                    <div class="p_top">
-
-                        <a class="position_link" href="//www.lagou.com/jobs/2136127.html" target="_blank" data-index="0"
-                           data-lg-tj-id="8E00" data-lg-tj-no="0100" data-lg-tj-cid="2136127">
-                            <h2>新媒体销售（提供媒体客户资源）</h2>
-
-
-                            <span class="add">[<em>北京</em>]</span>
-
-
-                        </a>
-                        <span class="format-time">15:50发布</span>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="city" class="col-sm-2 col-md-2 col-lg-1 control-label">城市：</label>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <select class="form-control" name="city" id="city">
+                            <option value="">不限</option>
+                            <% for(var i = 0 ; i < citys.length ; i++){ %>
+                            <option value="<%= citys[i] %>"><%= citys[i] %></option>
+                            <% } %>
+                        </select>
                     </div>
-                    <div class="p_bot">
-                        <span class="money">5k-8k</span>
-                        <div class="li_b_l">
-                            <!--<i></i>-->经验不限 / 不限
+                    <label for="yx" class="col-sm-2 col-md-2 col-lg-1 control-label">月薪：</label>
+                    <div class="col-sm-3 col-md-3 col-lg-2">
+                        <select class="form-control" name="yx" id="yx">
+                            <option value="">不限</option>
+                            <% for(var i = 0 ; i < salary.length ; i++){ %>
+                            <option value="<%= salary[i] %>"><%= salary[i] %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="joblist" class="joblist">
+        <ul>
+            <li ng-repeat="job in jobs">
+                <div class="top clearfix">
+                    <div class="position ">
+                        <div class="t clearfix">
+                            <h4>
+                                {{job.positionName}}
+                                <span>[{{job.district||job.city}}]</span>
+                                <span>{{job.createTime|limitTo:10}}</span>
+                            </h4>
+
+                        </div>
+                        <div class="b clearfix">
+                            <h4 class="money">
+                                {{job.salary}}
+                                <span>经验{{job.workYear}} / {{job.education}}</span>
+                            </h4>
                         </div>
                     </div>
-                </div>
-                <div class="company">
-                    <div class="company_name">
-                        <a href="//www.lagou.com/gongsi/81108.html" target="_blank" data-lg-tj-id="8F00"
-                           data-lg-tj-no="0100 " data-lg-tj-cid="81108">胜券在握</a><span class="company_mark"><span>该企业已上传营业执照并经过资质验证审核</span></span>
+                    <div class="logo col-md-1 col-lg-1">
+                        <h4>
+                            <img ng-src="http://www.lgstatic.com/thumbnail_120x120/{{job.companyLogo}}">
+
+                        </h4>
                     </div>
-                    <div class="industry">
-                        金融 / 成长型(不需要融资)
+                    <div class="company col-md-5 col-lg-4">
+                        <div class="t clearfix">
+                           <h4> {{job.companyShortName}}</h4>
+                        </div>
+                        <dib class="b clearfix">
+                            <span>{{job.industryField}} / {{job.financeStage}}</span>
+                        </dib>
                     </div>
                 </div>
-                <div class="com_logo">
-                    <a href="//www.lagou.com/gongsi/81108.html" target="_blank" data-lg-tj-id="8G00"
-                       data-lg-tj-no="
-
-
-                    0100
-
-
-                " data-lg-tj-cid="81108"><img
-                                src="//www.lgstatic.com/thumbnail_120x120/image1/M00/34/EF/Cgo8PFWaJoeAWW0mAADFua9zXr4974.jpg?cc=0.4320569122210145"
-                                alt="胜券在握" width="60" height="60"></a>
+                <div class="bottom clearfix">
+                    <div class="left">
+                        <span>"{{job.positionAdvantage}}"</span>
+                    </div>
+                    <div class="right col-md-6 col-lg-5">
+                        <span ng-repeat="item in job.companyLabelList">
+                            {{item}}
+                        </span>
+                    </div>
                 </div>
-            </div>
-            <div class="list_item_bot">
-                <div class="li_b_l">“升职快，高薪诚聘”</div>
-
-                <div class="li_b_r">
-
-
-                    <span>技能培训</span>
-
-
-                    <span>专项奖金</span>
-
-
-                    <span>带薪年假</span>
-
-
-                    <span>绩效奖金</span>
-
-
-                </div>
-            </div>
-        </li>
-
-    </ul>
-
-    <!-- 分页 -->
-    <div class="item_con_pager">
-        <div class="pager_container"><span hidefocus="hidefocus" action="prev"
-                                           class="pager_prev pager_prev_disabled"><strong
-                        class="pager_lgthen pager_lgthen_dis"></strong>上一页</span><span hidefocus="hidefocus"
-                                                                                       page="1"
-                                                                                       class="pager_is_current">
-    1
-</span><span hidefocus="hidefocus" page="2" class="pager_not_current">
-    2
-</span><span hidefocus="hidefocus" page="3" class="pager_not_current">
-    3
-</span>···<span hidefocus="hidefocus" page="30" class="pager_not_current">
-    30
-</span><span hidefocus="hidefocus" action="next" class="pager_next ">下一页<strong class="pager_lgthen "></strong></span>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
+
 
 <!-- 数据为空 template -->
 <script id="empty-position" type="text/html">
@@ -179,6 +143,7 @@
         </div>
     </div>
 </script>
-</div>
+<script src="/static/scripts/angular.min.js"></script>
+<script src="/static/scripts/crawler/app.js"></script>
 </body>
 </html>

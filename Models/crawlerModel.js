@@ -41,7 +41,9 @@ function getJobs(yx,city,pageIndex,positionName,callback){
     req.end();
 }
 citys=['北京','上海','广州','深圳','杭州','天津','成都','西安','南京','苏州'];
+salary=['2k以下','2k-5k','5k-10k','10k-15k','15k-25k','25k-50k','50k以上'];
 module.exports={
     getJobs,
-    citys
+    citys,
+    salary
 }
