@@ -60,7 +60,7 @@
             </div>
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label for="city" class="col-sm-2 col-md-2 col-lg-1 control-label">城市：</label>
+                    <label for="city" class="col-sm-2 col-md-1 col-lg-1 control-label">城市：</label>
                     <div class="col-sm-3 col-md-3 col-lg-2">
                         <select class="form-control" name="city" id="city">
                             <option value="">不限</option>
@@ -69,7 +69,7 @@
                             <% } %>
                         </select>
                     </div>
-                    <label for="yx" class="col-sm-2 col-md-2 col-lg-1 control-label">月薪：</label>
+                    <label for="yx" class="col-sm-2 col-md-1 col-lg-1 control-label">月薪：</label>
                     <div class="col-sm-3 col-md-3 col-lg-2">
                         <select class="form-control" name="yx" id="yx">
                             <option value="">不限</option>
@@ -89,28 +89,30 @@
                     <div class="position ">
                         <div class="t clearfix">
                             <h4>
-                                {{job.positionName}}
-                                <span>[{{job.district||job.city}}]</span>
+                               <a href="http://www.lagou.com/jobs/{{job.positionId}}.html" target="_blank">{{job.positionName}}
+                                   <span>[{{job.businessZones[0]||job.district||job.city}}]</span></a>
                                 <span>{{job.createTime|limitTo:10}}</span>
                             </h4>
 
                         </div>
                         <div class="b clearfix">
                             <h4 class="money">
-                                {{job.salary}}
+                               <span id="money">{{job.salary}}</span>
                                 <span>经验{{job.workYear}} / {{job.education}}</span>
                             </h4>
                         </div>
                     </div>
                     <div class="logo col-md-1 col-lg-1">
                         <h4>
-                            <img ng-src="http://www.lgstatic.com/thumbnail_120x120/{{job.companyLogo}}">
+                            <a href="http://www.lagou.com/gongsi/{{job.companyId}}.html" target="_blank">
+                                <img ng-src="http://www.lgstatic.com/thumbnail_120x120/{{job.companyLogo}}">
+                            </a>
 
                         </h4>
                     </div>
                     <div class="company col-md-5 col-lg-4">
                         <div class="t clearfix">
-                           <h4> {{job.companyShortName}}</h4>
+                           <h4><a href="http://www.lagou.com/gongsi/{{job.companyId}}.html" target="_blank">{{job.companyShortName}}</a></h4>
                         </div>
                         <dib class="b clearfix">
                             <span>{{job.industryField}} / {{job.financeStage}}</span>
