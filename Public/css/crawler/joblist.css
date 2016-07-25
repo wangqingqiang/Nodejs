@@ -19,6 +19,7 @@ input[type=text]{
     line-height: 18px;
     /*border-color: hsl(0, 100%, 100%);*/
     border-radius:2px;
+    border-style:none;
 }
 input[type=text]::selection{
     border-color:red;
