@@ -4,6 +4,7 @@
 var express=require('express');
 var albumRouter=require('./Controllers/albumRouter.js');
 var crawlerRouter=require('./Controllers/crawlerRouter.js');
+var commonRouter=require('./Controllers/commonRouter.js');
 var app=express();
 
 app.set('views','./Views');
@@ -18,6 +19,9 @@ app.use('/static',express.static('./Public'));
 app.get('/',albumRouter.showAlbumList);
 app.get('/favicon.ico',function(req,res){res.end();});
 
+app.get('/login',commonRouter.showLoginPage)
+
+//拉钩爬虫路由
 app.get('/crawler',crawlerRouter.showCrawlerPage)
 app.post('/getJobs',crawlerRouter.getJobList)
 
